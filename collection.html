@@ -126,6 +126,54 @@
         </div>
     </main>
 
+    <!-- Global Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h1 class="serif"
+                        style="color: white; letter-spacing: 4px; font-size: 1.5rem; margin-bottom: 20px;">BOUTIQUE</h1>
+                    <p>Experience the epitome of Eastern luxury. Our hand-embroidered ensembles are crafted in our Dubai
+                        studio, combining traditional artisanal techniques with modern silhouettes.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Collections</h4>
+                    <ul class="footer-links">
+                        <li><a href="collection.html">New Arrivals</a></li>
+                        <li><a href="collection.html">Kurtas</a></li>
+                        <li><a href="collection.html">2-Piece</a></li>
+                        <li><a href="sale.html">Special Offers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Customer Care</h4>
+                    <ul class="footer-links">
+                        <li><a href="about.html">Our Story</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                        <li><a href="#">Shipping & Returns</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Newsletter</h4>
+                    <p>Join the inner circle for exclusive access to new drops and private sales.</p>
+                    <form class="newsletter-form">
+                        <input type="email" class="newsletter-input" placeholder="Your Email">
+                        <button type="button" class="newsletter-btn">JOIN</button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 BOUTIQUE Luxury Eastern Wear. All rights reserved.</p>
+                <div class="social-links">
+                    <a href="#"><i data-lucide="instagram"></i></a>
+                    <a href="#"><i data-lucide="facebook"></i></a>
+                    <a href="#"><i data-lucide="twitter"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
     <!-- Overlays -->
     <div class="search-overlay" id="searchOverlay">
         <div class="search-input-container">
@@ -184,8 +232,8 @@
                 <div class="product-card" onclick="window.location.href='product.html?id=${product.id}'">
                     <div class="product-image-container">
                         ${product.onSale ? '<div class="sale-badge">SALE</div>' : ''}
-                        <img src="${product.primaryImage}" alt="Boutique ${product.title} - ${product.fabric} Eastern wear featuring artisanal embroidery" class="product-image primary">
-                        <img src="${product.secondaryImage}" alt="${product.title} detailed texture - close-up of ${product.fabric} work" class="product-image secondary">
+                        <img src="${product.primaryImage}" alt="Boutique ${product.title} - ${product.fabric} Eastern wear featuring artisanal embroidery" class="product-image primary" loading="lazy">
+                        <img src="${product.secondaryImage}" alt="${product.title} detailed texture - close-up of ${product.fabric} work" class="product-image secondary" loading="lazy">
                         <div class="add-to-cart-quick" onclick="event.stopPropagation(); addToCart(${product.id})">Add to Bag</div>
                         <button class="wishlist-card-btn" onclick="event.stopPropagation(); toggleWishlist(${product.id})">
                             <i data-lucide="heart"></i>
