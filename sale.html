@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sale | Luxury Eastern Wear</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600&display=swap"
+        rel="stylesheet">
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/components.css">
+</head>
+
+<body>
+    <header class="header">
+        <div class="nav-toggle" id="mobileMenuBtn">
+            <i data-lucide="menu"></i>
+        </div>
+
+        <nav class="nav-links desktop-only">
+            <a href="collection.html">New Arrivals</a>
+            <a href="collection.html">Kurtas</a>
+            <a href="collection.html">2-Piece</a>
+        </nav>
+
+        <div class="logo">
+            <a href="index.html">BOUTIQUE</a>
+        </div>
+
+        <nav class="nav-links desktop-only">
+            <a href="collection.html">Luxury Pret</a>
+            <a href="sale.html" style="color: var(--color-coral); font-weight: 600;">Sale</a>
+        </nav>
+
+        <div class="header-icons">
+            <button class="icon-btn search-btn"><i data-lucide="search"></i></button>
+            <button class="icon-btn wishlist-btn" onclick="window.location.href='wishlist.html'"><i
+                    data-lucide="heart"></i></button>
+            <button class="icon-btn cart-btn" id="cartToggle">
+                <i data-lucide="shopping-bag"></i>
+                <span class="cart-count">0</span>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <div class="sale-header-banner">
+            <div class="container">
+                <p class="sale-tagline">Limited Time Offer</p>
+                <h1 class="serif sale-title-main">Sale is Live Now</h1>
+                <p class="sale-tagline" style="color: var(--color-gold);">Up to 40% Discount on selected items</p>
+            </div>
+        </div>
+
+        <section class="container">
+            <div class="section-header">
+                <h2 class="serif">The Sale Collection</h2>
+                <p id="productCount">7 Items on Sale</p>
+            </div>
+
+            <div class="product-grid" id="saleProductGrid" style="grid-template-columns: repeat(4, 1fr);">
+                <!-- Sale items injected by JS -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Overlays -->
+    <div class="search-overlay" id="searchOverlay">
+        <div class="search-input-container">
+            <button class="close-search" id="closeSearch"><i data-lucide="x"
+                    style="width: 40px; height: 40px;"></i></button>
+            <input type="text" id="searchInput" placeholder="Search for Kurtas, Silk, Luxe...">
+        </div>
+        <div class="search-results" id="searchResults"></div>
+    </div>
+
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay">
+        <button class="close-mobile-menu" id="closeMobileMenu"><i data-lucide="x"></i></button>
+        <div class="mobile-menu-links">
+            <a href="collection.html">New Arrivals</a>
+            <a href="collection.html">Kurtas</a>
+            <a href="collection.html">2-Piece</a>
+            <a href="collection.html">Luxury Pret</a>
+            <a href="sale.html" style="color: var(--color-coral);">Sale</a>
+            <a href="wishlist.html" style="margin-top: 20px; font-size: 1.2rem;">My Wishlist</a>
+        </div>
+    </div>
+
+    <div class="cart-overlay" id="cartOverlay"></div>
+    <div class="cart-drawer" id="cartDrawer">
+        <div class="cart-header">
+            <h3 class="serif">Your Bag</h3>
+            <button class="close-btn" id="closeCart"><i data-lucide="x"></i></button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <p class="empty-msg">Your bag is empty.</p>
+        </div>
+        <div class="cart-footer" id="cartFooter">
+            <div class="cart-total">
+                <span>Total</span>
+                <span id="cartSubtotal">$0.00</span>
+            </div>
+            <button class="btn btn-primary btn-full" onclick="window.location.href='checkout.html'">Checkout</button>
+        </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+
+    <!-- Scripts -->
+    <script src="js/products.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/wishlist.js"></script>
+    <script src="js/search.js"></script>
+    <script src="js/animations.js"></script>
+    <script>
+        function renderSaleGrid() {
+            const grid = document.getElementById('saleProductGrid');
+            const saleItems = getAllProducts().filter(p => p.onSale);
+
+            grid.innerHTML = saleItems.map(product => `
+                <div class="product-card" onclick="window.location.href='product.html?id=${product.id}'">
+                    <div class="product-image-container">
+                        <div class="sale-badge">40% OFF</div>
+                        <img src="${product.primaryImage}" alt="${product.title}" class="product-image primary">
+                        <div class="add-to-cart-quick" onclick="event.stopPropagation(); addToCart(${product.id})">Add to Bag</div>
+                        <button class="icon-btn" onclick="event.stopPropagation(); toggleWishlist(${product.id})" style="position: absolute; top: 15px; right: 15px; background: rgba(255,255,255,0.7); border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; z-index: 10;">
+                            <i data-lucide="heart" style="width: 16px;"></i>
+                        </button>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">${product.title}</h3>
+                        <p class="product-price">
+                            <span class="discount-tag">$${product.price.toFixed(2)}</span>
+                            $${product.discountPrice.toFixed(2)}
+                        </p>
+                    </div>
+                </div>
+            `).join('');
+
+            document.getElementById('productCount').textContent = `${saleItems.length} Items on Sale`;
+
+            gsap.from(".product-card", {
+                opacity: 0,
+                y: 20,
+                stagger: 0.1,
+                duration: 0.8,
+                ease: "power2.out"
+            });
+
+            lucide.createIcons();
+            updateWishlistIcons();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderSaleGrid();
+            lucide.createIcons();
+        });
+    </script>
+</body>
+
+</html>

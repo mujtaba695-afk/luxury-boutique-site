@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details | Luxury Eastern Wear</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600&display=swap"
+        rel="stylesheet">
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/components.css">
+    <style>
+        .pdp-layout {
+            display: flex;
+            gap: 60px;
+            margin-top: 40px;
+            position: relative;
+        }
+
+        .pdp-gallery {
+            flex: 1.5;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .pdp-gallery img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            aspect-ratio: 3/4.5;
+        }
+
+        .pdp-info {
+            flex: 1;
+            position: sticky;
+            top: 120px;
+            height: fit-content;
+        }
+
+        .pdp-title {
+            font-size: 2.5rem;
+            margin-bottom: 5px;
+        }
+
+        .pdp-price {
+            font-size: 1.6rem;
+            color: var(--color-gold);
+            margin-bottom: 30px;
+        }
+
+        .pdp-description {
+            margin-bottom: 40px;
+            color: #666;
+            line-height: 1.8;
+        }
+
+        .size-selector {
+            margin-bottom: 30px;
+        }
+
+        .size-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .size-guide-link {
+            text-decoration: underline;
+            cursor: pointer;
+            color: var(--color-gold);
+        }
+
+        .size-options {
+            display: flex;
+            gap: 10px;
+        }
+
+        .size-btn {
+            width: 50px;
+            height: 50px;
+            border: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .size-btn:hover,
+        .size-btn.active {
+            border-color: var(--color-gold);
+            background: var(--color-off-white);
+        }
+
+        .accordion {
+            margin-top: 50px;
+            border-top: 1px solid var(--color-blush);
+        }
+
+        .accordion-item {
+            border-bottom: 1px solid var(--color-blush);
+        }
+
+        .accordion-header {
+            padding: 20px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .accordion-content {
+            height: 0;
+            overflow: hidden;
+            transition: height 0.3s ease;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .accordion-content.active {
+            height: auto;
+            padding-bottom: 20px;
+        }
+
+        .cross-sell {
+            margin-top: 80px;
+            padding-top: 40px;
+            border-top: 2px solid var(--color-blush);
+        }
+
+        /* Modal Styles */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 5000;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 992px) {
+            .pdp-layout {
+                flex-direction: column;
+            }
+
+            .pdp-info {
+                position: static;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="nav-toggle" id="mobileMenuBtn">
+            <i data-lucide="menu"></i>
+        </div>
+
+        <nav class="nav-links desktop-only">
+            <a href="collection.html">New Arrivals</a>
+            <a href="collection.html">Kurtas</a>
+            <a href="collection.html">2-Piece</a>
+        </nav>
+
+        <div class="logo">
+            <a href="index.html">BOUTIQUE</a>
+        </div>
+
+        <nav class="nav-links desktop-only">
+            <a href="collection.html">Luxury Pret</a>
+            <a href="sale.html">Sale</a>
+        </nav>
+
+        <div class="header-icons">
+            <button class="icon-btn search-btn"><i data-lucide="search"></i></button>
+            <button class="icon-btn wishlist-btn" onclick="window.location.href='wishlist.html'"><i
+                    data-lucide="heart"></i></button>
+            <button class="icon-btn cart-btn" id="cartToggle">
+                <i data-lucide="shopping-bag"></i>
+                <span class="cart-count">0</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="pdp-layout" id="pdpContent">
+            <!-- Content injected by JS -->
+        </div>
+
+        <section class="cross-sell">
+            <h2 class="serif" style="margin-bottom: 30px;">Complete The Look</h2>
+            <div class="product-grid" id="crossSellGrid">
+                <!-- Products injected by JS -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Overlays -->
+    <div class="search-overlay" id="searchOverlay">
+        <div class="search-input-container">
+            <button class="close-search" id="closeSearch"><i data-lucide="x"
+                    style="width: 40px; height: 40px;"></i></button>
+            <input type="text" id="searchInput" placeholder="Search for Kurtas, Silk, Luxe...">
+        </div>
+        <div class="search-results" id="searchResults"></div>
+    </div>
+
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay">
+        <button class="close-mobile-menu" id="closeMobileMenu"><i data-lucide="x"></i></button>
+        <div class="mobile-menu-links">
+            <a href="collection.html">New Arrivals</a>
+            <a href="collection.html">Kurtas</a>
+            <a href="collection.html">2-Piece</a>
+            <a href="collection.html">Luxury Pret</a>
+            <a href="sale.html" style="color: var(--color-coral);">Sale</a>
+            <a href="wishlist.html" style="margin-top: 20px; font-size: 1.2rem;">My Wishlist</a>
+        </div>
+    </div>
+
+    <!-- Size Guide Modal -->
+    <div class="modal" id="sizeGuideModal">
+        <div class="modal-content">
+            <div class="modal-close" id="closeSizeGuide"><i data-lucide="x"></i></div>
+            <h3 class="serif" style="margin-bottom: 20px;">Size Guide</h3>
+            <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                <thead>
+                    <tr style="border-bottom: 2px solid var(--color-blush);">
+                        <th style="padding: 10px;">Size</th>
+                        <th style="padding: 10px;">Bust (in)</th>
+                        <th style="padding: 10px;">Waist (in)</th>
+                        <th style="padding: 10px;">Hips (in)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid #eee;">
+                        <td style="padding: 10px;">S</td>
+                        <td style="padding: 10px;">34</td>
+                        <td style="padding: 10px;">28</td>
+                        <td style="padding: 10px;">36</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #eee;">
+                        <td style="padding: 10px;">M</td>
+                        <td style="padding: 10px;">36</td>
+                        <td style="padding: 10px;">30</td>
+                        <td style="padding: 10px;">38</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #eee;">
+                        <td style="padding: 10px;">L</td>
+                        <td style="padding: 10px;">38</td>
+                        <td style="padding: 10px;">32</td>
+                        <td style="padding: 10px;">40</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Cart Drawer -->
+    <div class="cart-overlay" id="cartOverlay"></div>
+    <div class="cart-drawer" id="cartDrawer">
+        <div class="cart-header">
+            <h3 class="serif">Your Bag</h3>
+            <button class="close-btn" id="closeCart"><i data-lucide="x"></i></button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <p class="empty-msg">Your bag is empty.</p>
+        </div>
+        <div class="cart-footer" id="cartFooter">
+            <div class="cart-total">
+                <span>Total</span>
+                <span id="cartSubtotal">$0.00</span>
+            </div>
+            <button class="btn btn-primary btn-full" onclick="window.location.href='checkout.html'">Checkout</button>
+        </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+
+    <!-- Scripts -->
+    <script src="js/products.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/wishlist.js"></script>
+    <script src="js/search.js"></script>
+    <script src="js/animations.js"></script>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = parseInt(urlParams.get('id')) || 1;
+        const product = getProductById(productId);
+
+        function renderPDP() {
+            if (!product) return;
+
+            const content = document.getElementById('pdpContent');
+            content.innerHTML = `
+                <div class="pdp-gallery">
+                    <img src="${product.primaryImage}" alt="${product.title}">
+                    <img src="${product.secondaryImage}" alt="${product.title}">
+                    <img src="${product.primaryImage}" alt="Detail View" style="filter: brightness(0.9);">
+                </div>
+                <div class="pdp-info">
+                    <nav style="font-size: 0.7rem; text-transform: uppercase; margin-bottom: 20px; letter-spacing: 1px;">
+                        <a href="index.html" style="text-decoration: none; color: #999;">Home</a> / 
+                        <a href="collection.html" style="text-decoration: none; color: #999;">Collections</a> / 
+                        ${product.title}
+                    </nav>
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                        <div>
+                            ${product.onSale ? '<span class="sale-badge" style="position: static; display: inline-block; margin-bottom: 15px;">SALE</span>' : ''}
+                            <h1 class="serif pdp-title">${product.title}</h1>
+                        </div>
+                        <button class="icon-btn" onclick="toggleWishlist(${product.id})" style="padding-top: 10px;">
+                            <i data-lucide="heart" style="width: 24px;"></i>
+                        </button>
+                    </div>
+                    <p class="pdp-price">
+                        ${product.onSale ? `<span class="discount-tag">$${product.price.toFixed(2)}</span> $${product.discountPrice.toFixed(2)}` : `$${product.price.toFixed(2)}`}
+                    </p>
+                    
+                    <div class="pdp-description">
+                        <p>${product.description}</p>
+                    </div>
+
+                    <div class="size-selector">
+                        <div class="size-header">
+                            <span>Select Size</span>
+                            <span class="size-guide-link" id="sizeGuideBtn">Size Guide</span>
+                        </div>
+                        <div class="size-options">
+                            ${product.sizes.map(size => `<div class="size-btn">${size}</div>`).join('')}
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary btn-full" onclick="addToCart(${product.id})">Add to Bag</button>
+
+                    <div class="accordion">
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                Fabric & Care <i data-lucide="chevron-down"></i>
+                            </div>
+                            <div class="accordion-content">
+                                <p>Fabric: 100% ${product.fabric}<br>
+                                Cold machine wash. Do not bleach. Tumble dry low.</p>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                Shipping & Returns <i data-lucide="chevron-down"></i>
+                            </div>
+                            <div class="accordion-content">
+                                <p>Free shipping on orders over $150. Returns accepted within 14 days of delivery.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Modal logic
+            document.getElementById('sizeGuideBtn').addEventListener('click', () => {
+                document.getElementById('sizeGuideModal').style.display = 'flex';
+            });
+            document.getElementById('closeSizeGuide').addEventListener('click', () => {
+                document.getElementById('sizeGuideModal').style.display = 'none';
+            });
+
+            // Size selection
+            document.querySelectorAll('.size-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                });
+            });
+
+            lucide.createIcons();
+            updateWishlistIcons();
+            renderCrossSell();
+        }
+
+        function toggleAccordion(header) {
+            const content = header.nextElementSibling;
+            const icon = header.querySelector('i');
+            content.classList.toggle('active');
+
+            if (content.classList.contains('active')) {
+                gsap.set(icon, { rotate: 180 });
+            } else {
+                gsap.set(icon, { rotate: 0 });
+            }
+        }
+
+        function renderCrossSell() {
+            const grid = document.getElementById('crossSellGrid');
+            const suggestions = getAllProducts().filter(p => p.id !== product.id).slice(0, 3);
+
+            grid.innerHTML = suggestions.map(p => `
+                <div class="product-card" onclick="window.location.href='product.html?id=${p.id}'">
+                    <div class="product-image-container">
+                        ${p.onSale ? '<div class="sale-badge">SALE</div>' : ''}
+                        <img src="${p.primaryImage}" alt="${p.title}" class="product-image primary">
+                        <img src="${p.secondaryImage}" alt="${p.title}" class="product-image secondary">
+                        <div class="add-to-cart-quick" onclick="event.stopPropagation(); addToCart(${p.id})">Add to Bag</div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title" style="font-size: 0.9rem;">${p.title}</h3>
+                        <p class="product-price" style="font-size: 0.8rem;">
+                            ${p.onSale ? `<span class="discount-tag">$${p.price.toFixed(2)}</span> $${p.discountPrice.toFixed(2)}` : `$${p.price.toFixed(2)}`}
+                        </p>
+                    </div>
+                </div>
+            `).join('');
+
+            lucide.createIcons();
+        }
+
+        document.addEventListener('DOMContentLoaded', renderPDP);
+    </script>
+</body>
+
+</html>
