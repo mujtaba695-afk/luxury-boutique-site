@@ -345,24 +345,25 @@
             if (!product) return;
 
             // Update Meta Tags Dynamically
-            document.title = `${product.title} | BOUTIQUE - Luxury Eastern Wear Dubai`;
-            document.querySelector('meta[name="description"]').setAttribute('content', `Shop the ${product.title}. ${product.description.substring(0, 120)}... Fast delivery in UAE & USA.`);
+            document.title = `${product.title} - ${product.fabric} ${product.occasion} | BOUTIQUE`;
+            document.querySelector('meta[name="description"]').setAttribute('content', `Shop the ${product.title}. ${product.description.substring(0, 120)}... Express shipping available worldwide.`);
             document.getElementById('canonicalLink').href = `https://mujtaba695-afk.github.io/luxury-boutique-site/product.html?id=${product.id}`;
 
             // Social Tags
-            document.querySelector('meta[property="og:title"]').setAttribute('content', product.title);
+            document.querySelector('meta[property="og:title"]').setAttribute('content', `${product.title} - ${product.fabric} ${product.occasion} | BOUTIQUE`);
             document.querySelector('meta[property="og:description"]').setAttribute('content', product.description.substring(0, 150));
             document.querySelector('meta[property="og:image"]').setAttribute('content', `https://mujtaba695-afk.github.io/luxury-boutique-site/${product.primaryImage}`);
             document.querySelector('meta[property="og:url"]').setAttribute('content', window.location.href);
             document.querySelector('meta[name="twitter:image"]').setAttribute('content', `https://mujtaba695-afk.github.io/luxury-boutique-site/${product.primaryImage}`);
 
-            // JSON-LD Schema
-            const schema = {
+            // JSON-LD Product Schema
+            const productSchema = {
                 "@context": "https://schema.org/",
                 "@type": "Product",
                 "name": product.title,
                 "image": `https://mujtaba695-afk.github.io/luxury-boutique-site/${product.primaryImage}`,
                 "description": product.description,
+                "sku": `BQT-${product.id}`,
                 "brand": {
                     "@type": "Brand",
                     "name": "BOUTIQUE"
@@ -375,7 +376,30 @@
                     "availability": "https://schema.org/InStock"
                 }
             };
-            document.getElementById('productSchema').textContent = JSON.stringify(schema);
+
+            // JSON-LD Breadcrumb Schema
+            const breadcrumbSchema = {
+                "@context": "https://schema.org",
+                "@type": "BreadcrumbList",
+                "itemListElement": [{
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Home",
+                    "item": "https://mujtaba695-afk.github.io/luxury-boutique-site/index.html"
+                }, {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": product.category,
+                    "item": `https://mujtaba695-afk.github.io/luxury-boutique-site/collection.html?category=${product.category}`
+                }, {
+                    "@type": "ListItem",
+                    "position": 3,
+                    "name": product.title,
+                    "item": window.location.href
+                }]
+            };
+
+            document.getElementById('productSchema').textContent = JSON.stringify([productSchema, breadcrumbSchema]);
 
             const content = document.getElementById('pdpContent');
             content.innerHTML = `
@@ -482,8 +506,8 @@
                 <div class="product-card" onclick="window.location.href='product.html?id=${p.id}'">
                     <div class="product-image-container">
                         ${p.onSale ? '<div class="sale-badge">SALE</div>' : ''}
-                        <img src="${p.primaryImage}" alt="Luxury ${p.title} - Hand-stitched ${p.fabric} ${p.category}" class="product-image primary">
-                        <img src="${p.secondaryImage}" alt="${p.title} back view" class="product-image secondary">
+                        <img src="${p.primaryImage}" alt="Complete the look with ${p.title} - ${p.fabric} ${p.category} with detailed embroidery" class="product-image primary">
+                        <img src="${p.secondaryImage}" alt="${p.title} back view - ${p.fabric} finish" class="product-image secondary">
                         <div class="add-to-cart-quick" onclick="event.stopPropagation(); addToCart(${p.id})">Add to Bag</div>
                     </div>
                     <div class="product-info">

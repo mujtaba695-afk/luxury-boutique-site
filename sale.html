@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sale | BOUTIQUE - Up to 40% Off Luxury Eastern Wear</title>
+    <title>Luxury Wear Sale | BOUTIQUE - Up to 40% Off Eastern Collection</title>
     <meta name="description"
-        content="The sale is live! Shop your favorite luxury Eastern wear with up to 40% discount. Limited time offer on silk and velvet collections.">
+        content="Get up to 40% off premium hand-embroidered Eastern wear. Shop luxury silk and velvet ensembles with worldwide delivery. Limited time offer.">
     <link rel="canonical" href="https://mujtaba695-afk.github.io/luxury-boutique-site/sale.html" />
 
     <!-- Social Sharing (Open Graph) -->
@@ -147,10 +147,10 @@
                 <div class="product-card" onclick="window.location.href='product.html?id=${product.id}'">
                     <div class="product-image-container">
                         <div class="sale-badge">40% OFF</div>
-                        <img src="${product.primaryImage}" alt="Discounted ${product.title} - Luxury ${product.fabric} Sale" class="product-image primary">
+                        <img src="${product.primaryImage}" alt="Sale: ${product.title} - Luxury ${product.fabric} ensemble with premium hand-stitching" class="product-image primary">
                         <div class="add-to-cart-quick" onclick="event.stopPropagation(); addToCart(${product.id})">Add to Bag</div>
-                        <button class="icon-btn" onclick="event.stopPropagation(); toggleWishlist(${product.id})" style="position: absolute; top: 15px; right: 15px; background: rgba(255,255,255,0.7); border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; z-index: 10;">
-                            <i data-lucide="heart" style="width: 16px;"></i>
+                        <button class="wishlist-card-btn" onclick="event.stopPropagation(); toggleWishlist(${product.id})">
+                            <i data-lucide="heart"></i>
                         </button>
                     </div>
                     <div class="product-info">
