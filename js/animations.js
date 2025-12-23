@@ -18,8 +18,8 @@ function renderFeaturedProducts() {
         <div class="product-card" onclick="window.location.href='product.html?id=${product.id}'">
             <div class="product-image-container">
                 ${product.onSale ? '<div class="sale-badge">SALE</div>' : ''}
-                <img src="${product.primaryImage}" alt="${product.title}" class="product-image primary">
-                <img src="${product.secondaryImage}" alt="${product.title}" class="product-image secondary">
+                <img src="${product.primaryImage}" alt="Premium ${product.title} - ${product.fabric} Luxury Wear" class="product-image primary">
+                <img src="${product.secondaryImage}" alt="${product.title} lifestyle view" class="product-image secondary">
                 <div class="add-to-cart-quick" onclick="event.stopPropagation(); addToCart(${product.id})">Add to Bag</div>
             </div>
             <div class="product-info">

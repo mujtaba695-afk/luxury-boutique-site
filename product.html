@@ -4,7 +4,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Details | Luxury Eastern Wear</title>
+    <title>BOUTIQUE | Luxury Eastern Wear</title>
+    <meta name="description"
+        content="Shop luxury Eastern wear at BOUTIQUE. Hand-embroidered elegancy with fast global delivery.">
+    <link rel="canonical" href="" id="canonicalLink" />
+
+    <!-- Dynamic Social Sharing Placeholder -->
+    <meta property="og:title" content="Boutique Luxury Wear">
+    <meta property="og:description" content="Discover premium hand-embroidered collection.">
+    <meta property="og:image" content="">
+    <meta property="og:url" content="">
+    <meta property="og:type" content="product">
+
+    <!-- X (Twitter) Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="">
+
+    <!-- JSON-LD Schema Placeholder -->
+    <script type="application/ld+json" id="productSchema"></script>
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -327,12 +344,45 @@
         function renderPDP() {
             if (!product) return;
 
+            // Update Meta Tags Dynamically
+            document.title = `${product.title} | BOUTIQUE - Luxury Eastern Wear Dubai`;
+            document.querySelector('meta[name="description"]').setAttribute('content', `Shop the ${product.title}. ${product.description.substring(0, 120)}... Fast delivery in UAE & USA.`);
+            document.getElementById('canonicalLink').href = `https://mujtaba695-afk.github.io/luxury-boutique-site/product.html?id=${product.id}`;
+
+            // Social Tags
+            document.querySelector('meta[property="og:title"]').setAttribute('content', product.title);
+            document.querySelector('meta[property="og:description"]').setAttribute('content', product.description.substring(0, 150));
+            document.querySelector('meta[property="og:image"]').setAttribute('content', `https://mujtaba695-afk.github.io/luxury-boutique-site/${product.primaryImage}`);
+            document.querySelector('meta[property="og:url"]').setAttribute('content', window.location.href);
+            document.querySelector('meta[name="twitter:image"]').setAttribute('content', `https://mujtaba695-afk.github.io/luxury-boutique-site/${product.primaryImage}`);
+
+            // JSON-LD Schema
+            const schema = {
+                "@context": "https://schema.org/",
+                "@type": "Product",
+                "name": product.title,
+                "image": `https://mujtaba695-afk.github.io/luxury-boutique-site/${product.primaryImage}`,
+                "description": product.description,
+                "brand": {
+                    "@type": "Brand",
+                    "name": "BOUTIQUE"
+                },
+                "offers": {
+                    "@type": "Offer",
+                    "url": window.location.href,
+                    "priceCurrency": "USD",
+                    "price": product.onSale ? product.discountPrice : product.price,
+                    "availability": "https://schema.org/InStock"
+                }
+            };
+            document.getElementById('productSchema').textContent = JSON.stringify(schema);
+
             const content = document.getElementById('pdpContent');
             content.innerHTML = `
                 <div class="pdp-gallery">
-                    <img src="${product.primaryImage}" alt="${product.title}">
-                    <img src="${product.secondaryImage}" alt="${product.title}">
-                    <img src="${product.primaryImage}" alt="Detail View" style="filter: brightness(0.9);">
+                    <img src="${product.primaryImage}" alt="Luxury ${product.title} - Hand-embroidered ${product.fabric} ensemble">
+                    <img src="${product.secondaryImage}" alt="${product.title} detail view showing intricate ${product.fabric} work">
+                    <img src="${product.primaryImage}" alt="${product.title} lifestyle view" style="filter: brightness(0.9);">
                 </div>
                 <div class="pdp-info">
                     <nav style="font-size: 0.7rem; text-transform: uppercase; margin-bottom: 20px; letter-spacing: 1px;">
@@ -432,8 +482,8 @@
                 <div class="product-card" onclick="window.location.href='product.html?id=${p.id}'">
                     <div class="product-image-container">
                         ${p.onSale ? '<div class="sale-badge">SALE</div>' : ''}
-                        <img src="${p.primaryImage}" alt="${p.title}" class="product-image primary">
-                        <img src="${p.secondaryImage}" alt="${p.title}" class="product-image secondary">
+                        <img src="${p.primaryImage}" alt="Luxury ${p.title} - Hand-stitched ${p.fabric} ${p.category}" class="product-image primary">
+                        <img src="${p.secondaryImage}" alt="${p.title} back view" class="product-image secondary">
                         <div class="add-to-cart-quick" onclick="event.stopPropagation(); addToCart(${p.id})">Add to Bag</div>
                     </div>
                     <div class="product-info">

@@ -4,7 +4,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Collections | Luxury Eastern Wear</title>
+    <title>Collections | BOUTIQUE - Luxury Eastern Wear Dubai</title>
+    <meta name="description"
+        content="Browse our exclusive collection of luxury Eastern wear. From silk kurtas to festive velvet ensembles, find your perfect outfit for every occasion.">
+    <link rel="canonical" href="https://mujtaba695-afk.github.io/luxury-boutique-site/collection.html" />
+
+    <!-- Social Sharing (Open Graph) -->
+    <meta property="og:title" content="Collections | Luxury Eastern Wear Boutique">
+    <meta property="og:description"
+        content="Browse our exclusive collection of luxury Eastern wear. Fine silk and velvet ensembles with fast UAE & USA delivery.">
+    <meta property="og:image"
+        content="https://mujtaba695-afk.github.io/luxury-boutique-site/assets/images/golden_ivory_highres.png">
+    <meta property="og:url" content="https://mujtaba695-afk.github.io/luxury-boutique-site/collection.html">
+    <meta property="og:type" content="website">
+
+    <!-- X (Twitter) Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image"
+        content="https://mujtaba695-afk.github.io/luxury-boutique-site/assets/images/golden_ivory_highres.png">
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -167,8 +184,8 @@
                 <div class="product-card" onclick="window.location.href='product.html?id=${product.id}'">
                     <div class="product-image-container">
                         ${product.onSale ? '<div class="sale-badge">SALE</div>' : ''}
-                        <img src="${product.primaryImage}" alt="${product.title}" class="product-image primary">
-                        <img src="${product.secondaryImage}" alt="${product.title}" class="product-image secondary">
+                        <img src="${product.primaryImage}" alt="Shop ${product.title} - ${product.fabric} Luxury Eastern Wear" class="product-image primary">
+                        <img src="${product.secondaryImage}" alt="${product.title} detailed texture" class="product-image secondary">
                         <div class="add-to-cart-quick" onclick="event.stopPropagation(); addToCart(${product.id})">Add to Bag</div>
                         <button class="icon-btn" onclick="event.stopPropagation(); toggleWishlist(${product.id})" style="position: absolute; top: 15px; right: 15px; background: rgba(255,255,255,0.7); border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; z-index: 10;">
                             <i data-lucide="heart" style="width: 16px;"></i>
